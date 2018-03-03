@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 #     Merge CSV; Merge multiple CSV files together
 #     equivalent will be generated.
 #     Copyright (C) 2018  Elliott Sobek
