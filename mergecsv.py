@@ -14,15 +14,46 @@
 
 import os
 import sys
+import getopt
 import csv
 
 from os.path import basename
 
 
 def main(argc=len(sys.argv), argv=sys.argv):
+    base_name = basename(argv[0])
+
     if argc < 2:
-        print("Usage: python3 " + basename(argv[0]) + " <filename.csv ...> <outfile>")
-        return
+        print("Usage: python3 " + base_name + " [-hvd] <filename.csv ...> <outfile>")
+        sys.exit(1)
+
+    try:
+        opts, args = getopt.getopt(argv[1:], "hvd")
+    except getopt.GetoptError as e:
+        print(e.msg)
+        sys.exit(1)
+
+    vertical_flag = False
+    diagonal_flag = False
+
+    for opt, args in opts:
+        if opt == "-h":
+            print("Usage: python3 " + base_name + " [-hvd] <filename.csv ...> <outfile>\n\n"
+                  "Default merge axis is horizontal (x axis)\n"
+                  "\t-h\tHelp\n\n"
+                  "\t-v\tMerge files vertically\n\n"
+                  "\t-d\tMerge files diagonally\n\n")
+            sys.exit()
+        elif opt == "-v":
+            vertical_flag = True
+            print("WIP")
+        elif opt == "-d":
+            diagonal_flag = True
+            print("WIP")
+
+    if vertical_flag and diagonal_flag:
+        print("Error: more than one merge axis flags set")
+        sys.exit(1)
 
     print("Merge CSV Copyright (C) 2018  Elliott Sobek\n"
           "This program comes with ABSOLUTELY NO WARRANTY.\n"
