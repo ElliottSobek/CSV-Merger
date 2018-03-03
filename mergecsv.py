@@ -66,18 +66,18 @@ def main(argc=len(sys.argv), argv=sys.argv):
             print("Error: Passed in file(s) must be comma separated value (csv) format")
             return
 
-    if os.stat(argv[1]).st_size == 0 and os.stat(argv[2]).st_size == 0:
-        output = open(argv[3], 'w', newline='')
-        writer = csv.writer(output)
-        writer.writerow(['Error: no data was provided'])
-        output.close()
-        return
-    elif os.stat(argv[1]).st_size == 0:
-        copyfile(argv[2], argv[3])
-        return
-    elif os.stat(argv[2]).st_size == 0:
-        copyfile(argv[1], argv[3])
-        return
+    # if os.stat(argv[1]).st_size == 0 and os.stat(argv[2]).st_size == 0:
+    #     output = open(argv[3], 'w', newline='')
+    #     writer = csv.writer(output)
+    #     writer.writerow(['Error: no data was provided'])
+    #     output.close()
+    #     return
+    # elif os.stat(argv[1]).st_size == 0:
+    #     copyfile(argv[2], argv[3])
+    #     return
+    # elif os.stat(argv[2]).st_size == 0:
+    #     copyfile(argv[1], argv[3])
+    #     return
 
     filename = sys.argv[-1]
 
