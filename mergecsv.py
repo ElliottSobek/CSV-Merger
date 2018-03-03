@@ -57,14 +57,10 @@ def main(argc=len(sys.argv), argv=sys.argv):
         print("Error: more than one merge axis flags set")
         sys.exit(1)
 
-    print("Merge CSV Copyright (C) 2018  Elliott Sobek\n"
-          "This program comes with ABSOLUTELY NO WARRANTY.\n"
-          "This is free software, and you are welcome to redistribute it under certain conditions.\n")
-
     for i in range(1, argc - 1):
         if not argv[i].endswith('.csv'):
             print("Error: Passed in file(s) must be comma separated value (csv) format")
-            return
+            sys.exit(1)
 
     # if os.stat(argv[1]).st_size == 0 and os.stat(argv[2]).st_size == 0:
     #     output = open(argv[3], 'w', newline='')
@@ -78,6 +74,10 @@ def main(argc=len(sys.argv), argv=sys.argv):
     # elif os.stat(argv[2]).st_size == 0:
     #     copyfile(argv[1], argv[3])
     #     return
+
+    print("Merge CSV Copyright (C) 2018  Elliott Sobek\n"
+          "This program comes with ABSOLUTELY NO WARRANTY.\n"
+          "This is free software, and you are welcome to redistribute it under certain conditions.\n")
 
     filename = sys.argv[-1]
 
