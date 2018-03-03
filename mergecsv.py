@@ -23,7 +23,7 @@ from os.path import basename
 def main(argc=len(sys.argv), argv=sys.argv):
     base_name = basename(argv[0])
 
-    if argc < 2:
+    if 4 < argc or 2 > argc:
         print("Usage: python3 " + base_name + " [-hvd] <filename.csv ...> <outfile>")
         sys.exit(1)
 
