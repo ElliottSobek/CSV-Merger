@@ -22,6 +22,10 @@ import csv
 from os.path import basename
 
 
+def is_file_empty(file):
+    return os.stat(file).st_size == 0
+
+
 def main(argc=len(sys.argv), argv=sys.argv):
     base_name = basename(argv[0])
 
@@ -62,16 +66,16 @@ def main(argc=len(sys.argv), argv=sys.argv):
             print("Error: Passed in file(s) must be comma separated value (csv) format")
             sys.exit(1)
 
-    # if os.stat(argv[1]).st_size == 0 and os.stat(argv[2]).st_size == 0:
+    # if is_file_empty(argv[1]) and is_file_empty(argv[2]):
     #     output = open(argv[3], 'w', newline='')
     #     writer = csv.writer(output)
     #     writer.writerow(['Error: no data was provided'])
     #     output.close()
     #     return
-    # elif os.stat(argv[1]).st_size == 0:
+    # elif is_file_empty(argv[1]):
     #     copyfile(argv[2], argv[3])
     #     return
-    # elif os.stat(argv[2]).st_size == 0:
+    # elif is_file_empty(argv[2]):
     #     copyfile(argv[1], argv[3])
     #     return
 
