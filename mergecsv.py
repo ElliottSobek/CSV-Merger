@@ -14,16 +14,11 @@
 #     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #     GNU General Public License for more details.
 
-import os
 import sys
 import getopt
 import csv
 
-from os.path import basename
-
-
-def is_file_empty(file):
-    return os.stat(file).st_size == 0
+from os.path import basename, getsize, exists
 
 
 def main(argc=len(sys.argv), argv=sys.argv):
@@ -61,23 +56,28 @@ def main(argc=len(sys.argv), argv=sys.argv):
         print("Error: more than one merge axis flags set")
         sys.exit(1)
 
-    for i in range(1, argc - 1):
+    for i in range(1, argc):
+        if not exists(argv[i]):
+            print("Error: " + argv[i] + "does not exist")
+            sys.exit(1)
+
+    for i in range(1, argc):
         if not argv[i].endswith('.csv'):
             print("Error: Passed in file(s) must be comma separated value (csv) format")
             sys.exit(1)
 
-    # if is_file_empty(argv[1]) and is_file_empty(argv[2]):
-    #     output = open(argv[3], 'w', newline='')
-    #     writer = csv.writer(output)
-    #     writer.writerow(['Error: no data was provided'])
-    #     output.close()
-    #     return
-    # elif is_file_empty(argv[1]):
-    #     copyfile(argv[2], argv[3])
-    #     return
-    # elif is_file_empty(argv[2]):
-    #     copyfile(argv[1], argv[3])
-    #     return
+    if getsize(argv[1]) and getsize(argv[2]):
+        output = open(argv[3], 'w', newline='')
+        writer = csv.writer(output)
+        writer.writerow(['Error: no data was provided'])
+        output.close()
+        return
+    elif getsize(argv[1]):
+        # copyfile(argv[2], argv[3])
+        return
+    elif getsize(argv[2]):
+        # copyfile(argv[1], argv[3])
+        return
 
     print("Merge CSV Copyright (C) 2018  Elliott Sobek\n"
           "This program comes with ABSOLUTELY NO WARRANTY.\n"
@@ -85,17 +85,17 @@ def main(argc=len(sys.argv), argv=sys.argv):
 
     filename = sys.argv[-1]
 
-    if not filename.endswith('.csv'):
-        filename = filename.split(".")[0]
-        filename += ".csv"
-
-    outfile = open(filename, 'wb', newline='')
-    writer = csv.writer(outfile)
-
-    for i in range(1, argc - 1):
-        if not os.stat(argv[i]).st_size:
-            continue
-    outfile.close()
+    # if not filename.endswith('.csv'):
+    #     filename = filename.split(".")[0]
+    #     filename += ".csv"
+    #
+    # outfile = open(filename, 'wb', newline='')
+    # writer = csv.writer(outfile)
+    #
+    # for i in range(1, argc - 1):
+    #     if not os.stat(argv[i]).st_size:
+    #         continue
+    # outfile.close()
 
 
 main()
