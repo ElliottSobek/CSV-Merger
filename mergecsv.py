@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 
 #     Merge CSV; Merge multiple CSV files together
-#     equivalent will be generated.
 #     Copyright (C) 2018  Elliott Sobek
 #
 #     This program is free software: you can redistribute it and/or modify
