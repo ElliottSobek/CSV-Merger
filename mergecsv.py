@@ -39,12 +39,15 @@ def main():
         print("Error: more than one merge axis flags set")
         sys.exit(1)
 
-    for i in range(len(in_files)):
-        if not exists(in_files[i]):
-            print("Error: " + in_files[i] + " does not exist")
+    for file in in_files:
+        if not exists(file):
+            print("Error: " + file + " does not exist")
             sys.exit(1)
-        if not in_files[i].endswith('.csv'):
-            print("Error: " + in_files[i] + " must be comma separated value (csv) format")
+        if not file.endswith('.csv'):
+            print("Error: " + file + " must be comma separated value (csv) format")
+            sys.exit(1)
+        if not options.force_flag and not getsize(file):
+            print("Error: " + file + " is empty")
             sys.exit(1)
 
     if not out_file.endswith('.csv'):
@@ -70,10 +73,6 @@ def main():
 
     # outfile = open(filename, 'wb', newline='')
     # writer = csv.writer(outfile)
-    #
-    # for i in range(1, argc - 1):
-    #     if not os.stat(argv[i]).st_size:
-    #         continue
     # outfile.close()
 
 
