@@ -22,13 +22,14 @@ from optparse import OptionParser
 
 def main():
     parser = OptionParser(usage="Usage: python3 %prog [options] <filename.csv ...> <outfile>", version="%prog 0.1")
-    parser.add_option("-v", "", action="store_true", dest="vertical_flag", help="Merge files vertically")
-    parser.add_option("-d", "", action="store_true", dest="diagonal_flag", help="Merge files diagonally")
+    parser.add_option("-v", action="store_true", dest="vertical_flag", help="Merge files vertically")
+    parser.add_option("-d", action="store_true", dest="diagonal_flag", help="Merge files diagonally")
+    parser.add_option("-f", action="store_true", dest="force_flag", help="Force merge if an input file is empty")
 
     options, args = parser.parse_args()
 
     if len(args) is not 3:
-        print("Usage: python3 " + basename(sys.argv[0]) + " [-hvd] <filename.csv ...> <outfile>")
+        print("Usage: python3 " + basename(sys.argv[0]) + " [-hvdf] <filename.csv ...> <outfile>")
         sys.exit(1)
 
     in_files = args[:-1]
@@ -67,12 +68,6 @@ def main():
     #     # copyfile(argv[1], argv[3])
     #     return
 
-    filename = sys.argv[-1]
-
-    # if not filename.endswith('.csv'):
-    #     filename = filename.split(".")[0]
-    #     filename += ".csv"
-    #
     # outfile = open(filename, 'wb', newline='')
     # writer = csv.writer(outfile)
     #
