@@ -13,11 +13,24 @@
 #     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #     GNU General Public License for more details.
 
+import os
 import sys
 import csv
 
-from os.path import basename, getsize, exists
+from os.path import basename, getsize, exists, dirname, splitext
 from optparse import OptionParser
+
+
+def gen_outfile(filepath, extension):
+    out_dir = dirname(filepath)
+    out_base = basename(filepath)
+    base_outfile = splitext(out_base)[0]
+
+    if out_dir:
+        if os.name == "nt":
+            return out_dir + '\\' + base_outfile + extension
+        return out_dir + '/' + base_outfile + extension
+    return out_dir + base_outfile + extension
 
 
 def main():
@@ -33,7 +46,7 @@ def main():
         sys.exit(1)
 
     in_files = args[:-1]
-    out_file = args[-1]
+    out_file_name = args[-1]
 
     if options.vertical_flag and options.diagonal_flag:
         print("Error: more than one merge axis flags set")
@@ -49,14 +62,23 @@ def main():
         if not options.force_flag and not getsize(file):
             print("Error: " + file + " is empty")
             sys.exit(1)
+    extension = ".csv"
 
-    if not out_file.endswith('.csv'):
-        print("Error: " + out_file + " must be comma separated value (csv) format")
-        sys.exit(1)
+    if not out_file_name.endswith(extension):
+        out_file_name = gen_outfile(out_file_name, extension)
 
     print("Merge CSV Copyright (C) 2018  Elliott Sobek\n"
           "This program comes with ABSOLUTELY NO WARRANTY.\n"
-          "This is free software, and you are welcome to redistribute it under certain conditions.\n")
+          "This is free software, and you are welcome to redistribute it under certain conditions.")
+
+    outfile = open(out_file_name, 'w', encoding='utf-8', newline='')
+    out_writer = csv.writer(outfile)
+
+    for in_filename in in_files:
+        in_file = open(in_filename, 'r', encoding='utf-8', newline='')
+
+        in_file.close()
+    outfile.close()
 
     # if getsize(argv[arg_index]) and getsize(argv[arg_index + 1]):
     #     output = open(argv[3], 'w', encoding='utf-8', newline='')
